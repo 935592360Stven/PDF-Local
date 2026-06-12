@@ -1,7 +1,7 @@
 "use client"
 import { useState, useCallback } from "react"
 import { Loader2, Download, Trash2 } from "lucide-react"
-import { track } from "@vercel/analytics"
+import { posthog } from "@/components/PostHogProvider"
 import ToolLayout from "@/components/ToolLayout"
 import FileUpload from "@/components/FileUpload"
 import { cn } from "@/lib/utils"
@@ -90,7 +90,7 @@ export default function DeletePagesPage() {
     } catch (err) { setProgress(`Error: ${err instanceof Error ? err.message : "Failed"}`) }
     finally { setProcessing(false) }
   }
-  const dl = () => { if (!blob) return; track("delete_download"); const u = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = u; a.download = `trimmed-${files[0]?.name || "output.pdf"}`; a.click(); URL.revokeObjectURL(u) }
+  const dl = () => { if (!blob) return; posthog.capture("delete_download"); const u = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = u; a.download = `trimmed-${files[0]?.name || "output.pdf"}`; a.click(); URL.revokeObjectURL(u) }
 
   return (
     <ToolLayout title="Delete Pages" description="Preview and remove unwanted pages from your PDF." icon={<Trash2 className="h-7 w-7 text-[#ff2d55]" />}>

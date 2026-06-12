@@ -1,7 +1,7 @@
 "use client"
 import { useState, useCallback, useMemo } from "react"
 import { Loader2, Download, Scissors, X, Plus } from "lucide-react"
-import { track } from "@vercel/analytics"
+import { posthog } from "@/components/PostHogProvider"
 import ToolLayout from "@/components/ToolLayout"
 import FileUpload from "@/components/FileUpload"
 import Slider from "@/components/Slider"
@@ -133,7 +133,7 @@ export default function SplitPDFPage() {
 
   const dl = () => {
     if (!blobUrl) return
-    track("split_download")
+    posthog.capture("split_download")
     const a = document.createElement("a")
     a.href = blobUrl
     a.download = `split-${splitMode === "custom" ? "custom" : pagesPerFile + "-pages-each"}.zip`

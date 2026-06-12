@@ -1,7 +1,7 @@
 "use client"
 import { useState, useCallback } from "react"
 import { Loader2, Download, RotateCw, ChevronDown, ChevronUp } from "lucide-react"
-import { track } from "@vercel/analytics"
+import { posthog } from "@/components/PostHogProvider"
 import ToolLayout from "@/components/ToolLayout"
 import FileUpload from "@/components/FileUpload"
 import { cn } from "@/lib/utils"
@@ -105,7 +105,7 @@ export default function RotatePDFPage() {
     } catch (err) { setProgress(`Error: ${err instanceof Error ? err.message : "Failed"}`) }
     finally { setRotating(false) }
   }
-  const dl = () => { if (!blob) return; track("rotate_download"); const u = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = u; a.download = `rotated-${files[0]?.name || "output.pdf"}`; a.click(); URL.revokeObjectURL(u) }
+  const dl = () => { if (!blob) return; posthog.capture("rotate_download"); const u = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = u; a.download = `rotated-${files[0]?.name || "output.pdf"}`; a.click(); URL.revokeObjectURL(u) }
 
   const hasFile = files.length > 0
 

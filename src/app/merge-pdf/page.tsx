@@ -1,7 +1,7 @@
 "use client"
 import { useState, useCallback } from "react"
 import { Loader2, Download, Combine } from "lucide-react"
-import { track } from "@vercel/analytics"
+import { posthog } from "@/components/PostHogProvider"
 import ToolLayout from "@/components/ToolLayout"
 import FileUpload from "@/components/FileUpload"
 import { cn } from "@/lib/utils"
@@ -30,7 +30,7 @@ export default function MergePDFPage() {
     finally { setMerging(false) }
   }
 
-  const download = () => { if (!blob) return; track("merge_download"); const u = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = u; a.download = "merged.pdf"; a.click(); URL.revokeObjectURL(u) }
+  const download = () => { if (!blob) return; posthog.capture("merge_download"); const u = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = u; a.download = "merged.pdf"; a.click(); URL.revokeObjectURL(u) }
 
   return (
     <ToolLayout title="Merge PDF" description="Combine multiple PDFs into one document in seconds." icon={<Combine className="h-7 w-7 text-[#007aff]" />}>

@@ -1,7 +1,7 @@
 "use client"
 import { useState, useCallback, useRef } from "react"
 import { Loader2, Download, Shuffle, GripVertical } from "lucide-react"
-import { track } from "@vercel/analytics"
+import { posthog } from "@/components/PostHogProvider"
 import ToolLayout from "@/components/ToolLayout"
 import FileUpload from "@/components/FileUpload"
 import { cn } from "@/lib/utils"
@@ -124,7 +124,7 @@ export default function ReorderPagesPage() {
     } catch (err) { setProgress(`Error: ${err instanceof Error ? err.message : "Failed"}`) }
     finally { setProcessing(false) }
   }
-  const dl = () => { if (!blob) return; track("reorder_download"); const u = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = u; a.download = `reordered-${files[0]?.name || "output.pdf"}`; a.click(); URL.revokeObjectURL(u) }
+  const dl = () => { if (!blob) return; posthog.capture("reorder_download"); const u = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = u; a.download = `reordered-${files[0]?.name || "output.pdf"}`; a.click(); URL.revokeObjectURL(u) }
 
   return (
     <ToolLayout title="Reorder Pages" description="Drag pages to rearrange them in your PDF." icon={<Shuffle className="h-7 w-7 text-[#ff9500]" />}>

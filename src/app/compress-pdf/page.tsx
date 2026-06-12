@@ -1,7 +1,7 @@
 "use client"
 import { useState, useCallback } from "react"
 import { Loader2, Download, FileDown } from "lucide-react"
-import { track } from "@vercel/analytics"
+import { posthog } from "@/components/PostHogProvider"
 import ToolLayout from "@/components/ToolLayout"
 import FileUpload from "@/components/FileUpload"
 import { cn } from "@/lib/utils"
@@ -73,7 +73,7 @@ export default function CompressPDFPage() {
     finally { setCompressing(false) }
   }
 
-  const dl = () => { if (!blob) return; track("compress_download", { size: String(files[0]?.size) }); const u = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = u; a.download = `compressed-${files[0]?.name || "output.pdf"}`; a.click(); URL.revokeObjectURL(u) }
+  const dl = () => { if (!blob) return; posthog.capture("compress_download", { file_size: files[0]?.size }); const u = URL.createObjectURL(blob); const a = document.createElement("a"); a.href = u; a.download = `compressed-${files[0]?.name || "output.pdf"}`; a.click(); URL.revokeObjectURL(u) }
   const sv = orig && comp ? ((1 - comp / orig) * 100).toFixed(0) : "0"
 
   return (
