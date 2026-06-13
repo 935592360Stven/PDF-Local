@@ -23,7 +23,7 @@ export const metadata: Metadata = {
   keywords:
     "pdf merger, pdf compressor, jpg to pdf, split pdf, pdf to jpg, free pdf tools, online pdf editor, private pdf tools, local pdf tools",
   verification: {
-    google: "google9ed3c94c6439864c",
+    google: "2lcZFZebhVhqnDYMTx7oXGgib6b2CL4VSWq2CuCo21w",
   },
 }
 
