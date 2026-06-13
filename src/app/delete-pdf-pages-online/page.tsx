@@ -27,7 +27,15 @@ export default function DeletePagesGuidePage() {
         our browser-based tool makes it easy. No software to install and no files to upload.
       </p>
 
-      <div className="mt-10 rounded-[16px] bg-[#f5f5f7] p-6 sm:p-8">
+      <div className="mt-10 flex justify-center">
+        <Link href="/delete-pages"
+          className="inline-flex items-center justify-center rounded-[12px] bg-[#007aff] px-8 py-3.5 text-[17px] font-medium text-white shadow-[0_4px_12px_rgba(0,125,255,0.3)] transition-all hover:bg-[#0066cc] hover:shadow-[0_6px_20px_rgba(0,125,255,0.4)] active:scale-[0.97]">
+          Delete Pages Now
+        </Link>
+      </div>
+      <p className="mt-3 text-center text-[13px] text-[#86868b]">Files are processed locally in your browser. No upload required.</p>
+
+      <div className="mt-16 rounded-[16px] bg-[#f5f5f7] p-6 sm:p-8">
         <h2 className="text-[17px] font-semibold text-[#1d1d1f]">Common use cases</h2>
         <ul className="mt-4 space-y-2 text-[14px] leading-[1.6] text-[#515154]">
           <li>Remove the first or last page of a document</li>

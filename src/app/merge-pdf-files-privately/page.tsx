@@ -28,7 +28,15 @@ export default function MergePdfGuidePage() {
         your files never leave your device.
       </p>
 
-      <div className="mt-10 rounded-[16px] bg-[#f5f5f7] p-6 sm:p-8">
+      <div className="mt-10 flex justify-center">
+        <Link href="/merge-pdf"
+          className="inline-flex items-center justify-center rounded-[12px] bg-[#007aff] px-8 py-3.5 text-[17px] font-medium text-white shadow-[0_4px_12px_rgba(0,125,255,0.3)] transition-all hover:bg-[#0066cc] hover:shadow-[0_6px_20px_rgba(0,125,255,0.4)] active:scale-[0.97]">
+          Merge PDFs Privately
+        </Link>
+      </div>
+      <p className="mt-3 text-center text-[13px] text-[#86868b]">Files are processed locally in your browser. No upload required.</p>
+
+      <div className="mt-16 rounded-[16px] bg-[#f5f5f7] p-6 sm:p-8">
         <h2 className="text-[17px] font-semibold text-[#1d1d1f]">Why use a private PDF merger?</h2>
         <ul className="mt-4 space-y-2 text-[14px] leading-[1.6] text-[#515154]">
           <li><strong>Your data stays yours</strong> — No uploads means no data leaks, no server logs, no copies stored anywhere</li>
