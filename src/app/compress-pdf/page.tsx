@@ -35,6 +35,7 @@ function fmtSize(bytes: number): string {
 export default function CompressPDFPage() {
   const [files, setFiles] = useState<File[]>([]), [compressing, setCompressing] = useState(false), [blob, setBlob] = useState<Blob | null>(null), [progress, setProgress] = useState(""), [orig, setOrig] = useState(0), [comp, setComp] = useState(0)
   const [level, setLevel] = useState("medium")
+  const disabled = files.length === 0
   const handleFiles = useCallback((f: File[]) => { setFiles(f); setBlob(null) }, [])
 
   const go = async () => {
@@ -80,27 +81,31 @@ export default function CompressPDFPage() {
     <ToolLayout title="Compress PDF" description="Reduce file size. Three levels to choose from." icon={<FileDown className="h-7 w-7 text-[#34c759]" />}>
       <FileUpload onFilesSelected={handleFiles} accept=".pdf" multiple={false} maxFiles={1} />
 
-      {files.length > 0 && (
-        <div className="mt-8">
-          <label className="text-[14px] font-medium text-[#1d1d1f]">Compression Level</label>
-          <div className="mt-2 grid grid-cols-3 gap-2.5">
-            {levels.map(l => {
-              const estMin = files[0].size * l.minRatio
-              const estMax = files[0].size * l.maxRatio
-              return (
-              <button key={l.id} onClick={() => setLevel(l.id)}
-                className={cn("rounded-[12px] border px-3 py-3 text-left transition-all",
-                  level === l.id ? "border-[#34c759] bg-[#34c759]/5" : "border-[#e8e8ed] bg-white hover:border-[#d2d2d7]")}>
-                <span className={cn("text-[13px] font-medium", level === l.id ? "text-[#1d1d1f]" : "text-[#1d1d1f]")}>{l.label}</span>
-                <p className="mt-0.5 text-[11px] text-[#86868b]">{l.desc}</p>
+      <div className="mt-8">
+        <label className="text-[14px] font-medium text-[#1d1d1f]">Compression Level</label>
+        <div className="mt-2 grid grid-cols-3 gap-2.5">
+          {levels.map(l => {
+            const estMin = files[0]?.size ? files[0].size * l.minRatio : 0
+            const estMax = files[0]?.size ? files[0].size * l.maxRatio : 0
+            return (
+            <button key={l.id} onClick={() => { if (!disabled) setLevel(l.id) }}
+              className={cn("rounded-[12px] border px-3 py-3 text-left transition-all",
+                disabled && "opacity-50 cursor-default",
+                !disabled && level === l.id ? "border-[#34c759] bg-[#34c759]/5" : "border-[#e8e8ed] bg-white",
+                !disabled && level !== l.id && "hover:border-[#d2d2d7]")}>
+              <span className={cn("text-[13px] font-medium", disabled ? "text-[#c7c7cc]" : "text-[#1d1d1f]")}>{l.label}</span>
+              <p className="mt-0.5 text-[11px] text-[#86868b]">{l.desc}</p>
+              {files[0] ? (
                 <p className="mt-1 text-[11px] text-[#34c759] font-medium">~{fmtSize(estMin)} – {fmtSize(estMax)}</p>
-              </button>
-              )
-            })}
-          </div>
-          <p className="mt-2 text-[11px] text-[#c7c7cc]">Estimate based on file size. Actual results vary by content.</p>
+              ) : (
+                <p className="mt-1 text-[11px] text-[#c7c7cc] font-medium">Upload to see estimate</p>
+              )}
+            </button>
+            )
+          })}
         </div>
-      )}
+        {files[0] && <p className="mt-2 text-[11px] text-[#c7c7cc]">Estimate based on file size. Actual results vary by content.</p>}
+      </div>
 
       <div className="mt-10 flex flex-col items-center gap-5">
         <button onClick={go} disabled={!files.length || compressing}
