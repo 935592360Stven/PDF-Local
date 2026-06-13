@@ -22,6 +22,9 @@ export const metadata: Metadata = {
     "Free online PDF tools that run in your browser. Merge, compress, split, rotate, and delete PDF pages — your files never leave your device.",
   keywords:
     "pdf merger, pdf compressor, jpg to pdf, split pdf, pdf to jpg, free pdf tools, online pdf editor, private pdf tools, local pdf tools",
+  verification: {
+    google: "google9ed3c94c6439864c",
+  },
 }
 
 export default function RootLayout({
